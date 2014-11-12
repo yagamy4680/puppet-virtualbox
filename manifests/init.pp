@@ -33,7 +33,7 @@ class virtualbox::extensions {
 
 define virtualbox::extension($source, $creates) {
   $clean_source = strip($source)
-  $basename = inline_template('<%= File.basename(clean_source) %>')
+  $basename = inline_template('<%= File.basename(@clean_source) %>')
 
   Exec {
     creates => $creates
