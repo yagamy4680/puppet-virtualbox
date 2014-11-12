@@ -6,6 +6,7 @@
 
 ```puppet
 include virtualbox
+include virtualbox::extensions
 ```
 
 ## Required Puppet Modules
