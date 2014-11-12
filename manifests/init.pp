@@ -33,7 +33,7 @@ class virtualbox::extensions (
   virtualbox::extension { 'extpack':
     source   => 'http://download.virtualbox.org/virtualbox/${version}/Oracle_VM_VirtualBox_Extension_Pack-${version}-${patch_level}.vbox-extpack',
     creates  => '/Applications/VirtualBox.app/Contents/MacOS/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack/ExtPack.xml',
-    require  => Package['VirtualBox-${version}-${patch_level}']
+    require  => Package['VirtualBox-4.3.8-96516']
   }
 }
 
