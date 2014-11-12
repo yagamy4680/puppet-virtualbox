@@ -7,10 +7,7 @@
 # http://download.virtualbox.org/virtualbox/4.3.18/VirtualBox-4.3.18-96516-OSX.dmg
 # http://download.virtualbox.org/virtualbox/4.3.18/Oracle_VM_VirtualBox_Extension_Pack-4.3.18-96516.vbox-extpack
 
-class virtualbox (
-  $version = '4.3.18',
-  $patch_level = '96516'
-) {
+class virtualbox {
 
   exec { 'Kill Virtual Box Processes':
     command     => 'pkill "VBoxXPCOMIPCD" || true && pkill "VBoxSVC" || true && pkill "VBoxHeadless" || true',
@@ -18,22 +15,19 @@ class virtualbox (
     refreshonly => true,
   }
 
-  package { "VirtualBox-${version}-${patch_level}":
+  package { 'VirtualBox-4.3.18':
     ensure   => installed,
     provider => 'pkgdmg',
-    source   => "http://download.virtualbox.org/virtualbox/${version}/VirtualBox-${version}-${patch_level}-OSX.dmg",
-    require  => Exec['Kill Virtual Box Processes'],
+    source   => 'http://download.virtualbox.org/virtualbox/4.3.18/VirtualBox-4.3.18-96516-OSX.dmg',
+    require  => Exec['Kill Virtual Box Processes']
   }
 }
 
-class virtualbox::extensions (
-  $version = '4.3.18',
-  $patch_level = '96516'
-) {
+class virtualbox::extensions {
   virtualbox::extension { 'extpack':
-    source   => 'http://download.virtualbox.org/virtualbox/${version}/Oracle_VM_VirtualBox_Extension_Pack-${version}-${patch_level}.vbox-extpack',
+    source   => 'http://download.virtualbox.org/virtualbox/4.3.18/Oracle_VM_VirtualBox_Extension_Pack-4.3.18-96516.vbox-extpack',
     creates  => '/Applications/VirtualBox.app/Contents/MacOS/ExtensionPacks/Oracle_VM_VirtualBox_Extension_Pack/ExtPack.xml',
-    require  => Package['VirtualBox-4.3.8-96516']
+    require  => Package['VirtualBox-4.3.18']
   }
 }
 
@@ -55,3 +49,4 @@ define virtualbox::extension($source, $creates) {
       require     => Exec["extension-download-${name}"];
   }
 }
+
